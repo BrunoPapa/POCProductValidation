@@ -24,33 +24,31 @@ namespace ProductValidation
 
         public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors)
         {
-            var product = await _products.GetById(contract.Product.Id);
+            //var product = await _products.GetById(contract.Product.Id);
             var validations = await _validations.GetByProduct(contract.Product.Id);
 
-            List<Task> tasks = new List<Task>();
+            //List<Task> tasks = new List<Task>();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             var cts = new CancellationTokenSource();
 
             validations.ToList().ForEach(
-                p => tasks.Add(
-                    Task.Run(
-                        async () => validationMessages.AddRange(_validationService.Validate(contract, p, cts, multipleErrors).Result.ToList())
-                    )
-                )
+                p => 
+                    //tasks.Add(Task.Run(
+                    //    async () => 
+                        validationMessages.AddRange(_validationService.Validate(contract, p, cts, multipleErrors).Result.ToList())
+                    //))
             );
 
-            while (tasks.Count > 0)
-            {
-                var finishedTask = await Task.WhenAny(tasks);                
-                tasks.Remove(finishedTask);
+            //while (tasks.Count > 0)
+            //{
+            //    var finishedTask = await Task.WhenAny(tasks);                
+            //    tasks.Remove(finishedTask);
 
-                if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
-                    cts.Cancel();                
-            }
+            //    if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
+            //        cts.Cancel();                
+            //}
 
             return validationMessages;
-        }        
-
-        
+        }                
     }
 }

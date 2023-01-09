@@ -1,12 +1,17 @@
-﻿using ProductValidation.IoC.Interface.Database;
-using System.ComponentModel.DataAnnotations.Schema;
-
 namespace ProductValidation.IoC.Database
 {
-    public class ConfigValidationRuleLOVEntity : IEntity
+    using ProductValidation.IoC.Interface.Database;
+    using System.ComponentModel.DataAnnotations.Schema;
+    
+    [Table("ConfigValidationRuleLOV")]
+    public partial class ConfigValidationRuleLOVEntity : IEntity
     {
         public int Id { get; set; }
-        public ConfigValidationRuleEntity ConfigValidationRule { get; set; }
+
+        public int ConfigValidationRuleId { get; set; }
+
         public int BaseLOVEntryId { get; set; }
+
+        public virtual ConfigValidationRuleEntity ConfigValidationRule { get; set; }
     }
 }

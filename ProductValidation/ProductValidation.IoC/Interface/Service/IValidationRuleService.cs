@@ -7,6 +7,6 @@ namespace ProductValidation.IoC.Interface.Service
 {
     public interface IValidationRuleService
     {
-        bool Validate(IEnumerable<FieldContractEntity> fields, ConfigValidationRuleEntity validationrule, CancellationTokenSource cts);
+        bool Validate(IEnumerable<FieldsContractEntity> fields, ConfigValidationRuleEntity validationrule, CancellationTokenSource cts);
     }
 }

@@ -13,37 +13,38 @@ namespace ProductValidation
     {
         public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
         {
-            List<Task> tasks = new List<Task>();
+            //List<Task> tasks = new List<Task>();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
 
             validation.ConfigValidationRules.ToList().ForEach(
-                p => 
-                    tasks.Add(Task.Run(async () => {
-                        if (!factoryRule(p.Id).Validate(contract.Fields, p, cts))
+                p =>
+                    { 
+                    //tasks.Add(Task.Run(async () => {
+                        if (!factoryRule(p.RuleTypeId).Validate(contract.FieldsContracts, p, cts))
                         { 
                             validationMessages.Add(new ValidationMessage()
                             {
-                                ConfigValidationRule = p,
-                                Message = validation.ConfigValidationMessages.FirstOrDefault().Message,
+                                RuleTypeId = p.RuleTypeId,
+                                Message = validation.ConfigValidationMessages.FirstOrDefault().Message + " - " + p.Operator.Message,
                                 MultipleErrors = multipleErrors,
-                                Severity = p.Severity
+                                Severity = (IoC.Enumerators.SeverityType)p.Severity
                             });
 
                             if (!multipleErrors)
                                 cts.Cancel();
                         }
                     }
-                ))
+                    //}))
             );
 
-            while (tasks.Count > 0)
-            {
-                var finishedTask = await Task.WhenAny(tasks);
-                tasks.Remove(finishedTask);
+            //while (tasks.Count > 0)
+            //{
+            //    var finishedTask = await Task.WhenAny(tasks);
+            //    tasks.Remove(finishedTask);
 
-                if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
-                    cts.Cancel();
-            }
+            //    if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
+            //        cts.Cancel();
+            //}
 
             return validationMessages;
         }
@@ -58,6 +59,16 @@ namespace ProductValidation
                 case 4: return new ruleTextNotEqValue();
                 case 5: return new ruleNumberEqValue();
                 case 6: return new ruleNumberNotEqValue();
+                case 7: return new ruleDateNotEqValue();
+                case 8: return new ruleDateNotEqValue();
+                case 9: return new ruleLOVEqValue();
+                case 10: return new ruleLOVNotEqValue();
+                case 11: return new ruleLOVInValue();
+                case 12: return new ruleLOVNotInValue();
+                case 13: return new ruleLOVNotInValue();
+                case 14: return new ruleLOVNotInValue();
+                case 15: return new ruleLOVNotInValue();
+                case 16: return new ruleLOVNotInValue();
                 default: return null;
             }
         }

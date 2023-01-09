@@ -10,14 +10,14 @@ namespace ProductValidation
 {
     public abstract class ValidationRuleService : IValidationRuleService
     {
-        protected IEnumerable<FieldContractEntity> _fields;
+        protected IEnumerable<FieldsContractEntity> _fields;
         protected ConfigValidationRuleEntity _rule;
         protected CancellationTokenSource _cts;
-        protected FieldContractEntity _selectedField;
+        protected FieldsContractEntity _selectedField;
         protected object _value;
         protected object _compareValue;
 
-        public bool Validate(IEnumerable<FieldContractEntity> fields, ConfigValidationRuleEntity validationrule, CancellationTokenSource cts)
+        public bool Validate(IEnumerable<FieldsContractEntity> fields, ConfigValidationRuleEntity validationrule, CancellationTokenSource cts)
         {
             _fields = fields;
             _rule = validationrule;
@@ -32,10 +32,10 @@ namespace ProductValidation
         protected virtual bool isValid()
         {
             //verifica se existe o campo para a aplicação da regra
-            if (_fields.Where(p => p.Field.Code == _rule.Operator.Code).Count() == 0) return false;
+            if (_fields.Where(p => p.FieldsProduct.Field.Code == _rule.Operator.Code).Count() == 0) return false;
             else
             {
-                _selectedField = _fields.Where(p => p.Field.Code == _rule.Operator.Code).FirstOrDefault();
+                _selectedField = _fields.Where(p => p.FieldsProduct.Field.Code == _rule.Operator.Code).FirstOrDefault();
 
                 //get value
                 if (_rule.Operator.IsField_Text)
@@ -53,11 +53,15 @@ namespace ProductValidation
                     _value = int.Parse(_selectedField.Value);
                     _compareValue = _rule.ValueMin;
                 }
-
                 else if (_rule.Operator.IsField_Decimal)
                 {
                     _value = float.Parse(_selectedField.Value);
                     _compareValue = _rule.ValueMax;
+                }
+                else if (_rule.Operator.IsFieldLOV)
+                {
+                    _value = _selectedField.Value;
+                    _compareValue = _rule.ValueSelect;
                 }
 
                 return true;

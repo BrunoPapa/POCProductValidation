@@ -13,9 +13,9 @@ namespace ProductValidation.Database
         {
             using (Context context = new Context())
             {
-                var query = context.BaseValidation
+                var query = context.BaseValidations
                     .Where(p => p.BaseProductId == ProductId)
-                    .Include(p => p.ConfigValidationRules)
+                    .Include(p => p.ConfigValidationRules.Select(o => o.Operator))
                     .Include(p => p.ConfigValidationMessages);
 
                 return query.ToList();

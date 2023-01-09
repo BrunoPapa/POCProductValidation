@@ -37,12 +37,22 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseValidationService.cs" />
-    <Compile Include="Rules\ruleFieldIsNotNull.cs" />
-    <Compile Include="Rules\ruleNumberNotEqValue.cs" />
-    <Compile Include="Rules\ruleNumberEqValue.cs" />
-    <Compile Include="Rules\ruleTextNotEqValue.cs" />
-    <Compile Include="Rules\ruleTextEqValue.cs" />
-    <Compile Include="Rules\ruleFieldIsNull.cs" />
+    <Compile Include="Rules\016-ruleNumberLesserOrEqualValue.cs" />
+    <Compile Include="Rules\015-ruleNumberLesserValue.cs" />
+    <Compile Include="Rules\014-ruleNumberGreaterOrEqualValue.cs" />
+    <Compile Include="Rules\013-ruleNumberGreaterValue.cs" />
+    <Compile Include="Rules\002-ruleFieldIsNotNull.cs" />
+    <Compile Include="Rules\012-ruleLOVNotInValue.cs" />
+    <Compile Include="Rules\011-ruleLOVInValue.cs" />
+    <Compile Include="Rules\010-ruleLOVNotEqValue.cs" />
+    <Compile Include="Rules\009-ruleLOVEqValue.cs" />
+    <Compile Include="Rules\007-ruleDateEqValue.cs" />
+    <Compile Include="Rules\008-ruleDateNotEqValue.cs" />
+    <Compile Include="Rules\006-ruleNumberNotEqValue.cs" />
+    <Compile Include="Rules\005-ruleNumberEqValue.cs" />
+    <Compile Include="Rules\004-ruleTextNotEqValue.cs" />
+    <Compile Include="Rules\003-ruleTextEqValue.cs" />
+    <Compile Include="Rules\001-ruleFieldIsNull.cs" />
     <Compile Include="ValidationRuleService.cs" />
     <Compile Include="ValidationService.cs" />
   </ItemGroup>
@@ -82,9 +92,6 @@
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\net461\System.Threading.Tasks.Extensions.dll</HintPath>
     </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

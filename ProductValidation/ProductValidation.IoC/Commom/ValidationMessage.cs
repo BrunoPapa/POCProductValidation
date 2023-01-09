@@ -7,7 +7,7 @@ namespace ProductValidation.IoC.Commom
     {
         public SeverityType Severity { get; set; }
         public string Message { get; set; }
-        public ConfigValidationRuleEntity ConfigValidationRule { get; set; }
+        public int RuleTypeId { get; set; }
         public bool MultipleErrors { get; set; }
     }
 }
