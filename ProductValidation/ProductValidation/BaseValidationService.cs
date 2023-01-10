@@ -11,42 +11,43 @@ namespace ProductValidation
 {
     public class BaseValidationService : IBaseValidationService
     {
-        public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
+        public async Task<IEnumerable<ValidationMessageRule>> Validate(ContractEntity contract, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
         {
-            //List<Task> tasks = new List<Task>();
-            List<ValidationMessage> validationMessages = new List<ValidationMessage>();
+            List<Task> tasks = new List<Task>();
+            List<ValidationMessageRule> validationMessageRules = new List<ValidationMessageRule>();
 
             validation.ConfigValidationRules.ToList().ForEach(
                 p =>
-                    { 
-                    //tasks.Add(Task.Run(async () => {
+                    tasks.Add(Task.Run(async () => {
                         if (!factoryRule(p.RuleTypeId).Validate(contract.FieldsContracts, p, cts))
-                        { 
-                            validationMessages.Add(new ValidationMessage()
+                        {
+                            validationMessageRules.Add(new ValidationMessageRule()
                             {
                                 RuleTypeId = p.RuleTypeId,
-                                Message = validation.ConfigValidationMessages.FirstOrDefault().Message + " - " + p.Operator.Message,
-                                MultipleErrors = multipleErrors,
+                                Code = p.Operator.Code,
+                                Message = p.Operator.Message,
                                 Severity = (IoC.Enumerators.SeverityType)p.Severity
                             });
 
                             if (!multipleErrors)
                                 cts.Cancel();
                         }
+
+                        return Task.CompletedTask;
                     }
-                    //}))
+                    ))
             );
 
-            //while (tasks.Count > 0)
-            //{
-            //    var finishedTask = await Task.WhenAny(tasks);
-            //    tasks.Remove(finishedTask);
+            while (tasks.Count > 0)
+            {
+                var finishedTask = await Task.WhenAny(tasks);
+                tasks.Remove(finishedTask);
 
-            //    if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
-            //        cts.Cancel();
-            //}
+                if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
+                    cts.Cancel();
+            }
 
-            return validationMessages;
+            return validationMessageRules;
         }
 
         private IValidationRuleService factoryRule(int idRule)
@@ -65,10 +66,17 @@ namespace ProductValidation
                 case 10: return new ruleLOVNotEqValue();
                 case 11: return new ruleLOVInValue();
                 case 12: return new ruleLOVNotInValue();
-                case 13: return new ruleLOVNotInValue();
-                case 14: return new ruleLOVNotInValue();
-                case 15: return new ruleLOVNotInValue();
-                case 16: return new ruleLOVNotInValue();
+                case 13: return new ruleNumberGreaterValue();
+                case 14: return new ruleNumberGreaterOrEqualValue();
+                case 15: return new ruleNumberLesserValue();
+                case 16: return new ruleNumberLesserOrEqualValue();
+                case 17: return new ruleNumberBetweenMaxandMin();
+                case 18: return new ruleNumberNotBetweenMaxandMin();
+                case 19: return new ruleNumberHasDecimalPart();
+                case 20: return new ruleDateGreaterValue();
+                case 21: return new ruleDateGreaterOrEqualValue();
+                case 22: return new ruleDateLesserValue();
+                case 23: return new ruleDateLesserOrEqualValue();
                 default: return null;
             }
         }

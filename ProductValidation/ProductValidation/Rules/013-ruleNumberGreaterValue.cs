@@ -8,9 +8,9 @@ namespace ProductValidation.Rules
         protected override bool RuleValidation()
         {
             if (Convert.ToInt32(_value) > Convert.ToInt32(_compareValue))
-                return false;
-            else
                 return true;
+            else
+                return false;
         }
     }
 }

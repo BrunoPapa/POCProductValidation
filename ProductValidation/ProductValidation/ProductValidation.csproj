@@ -37,11 +37,18 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="BaseValidationService.cs" />
+    <Compile Include="Rules\023-ruleDateLesserOrEqualValue.cs" />
+    <Compile Include="Rules\022-ruleDateLesserValue.cs" />
+    <Compile Include="Rules\021-ruleDateGreaterOrEqualValue.cs" />
+    <Compile Include="Rules\020-ruleDateGreaterValue.cs" />
+    <Compile Include="Rules\019-ruleNumberHasDecimalPart.cs" />
+    <Compile Include="Rules\017-ruleNumberBetweenMaxandMin.cs" />
+    <Compile Include="Rules\018-ruleNumberNotBetweenMaxandMin.cs" />
     <Compile Include="Rules\016-ruleNumberLesserOrEqualValue.cs" />
     <Compile Include="Rules\015-ruleNumberLesserValue.cs" />
     <Compile Include="Rules\014-ruleNumberGreaterOrEqualValue.cs" />
     <Compile Include="Rules\013-ruleNumberGreaterValue.cs" />
-    <Compile Include="Rules\002-ruleFieldIsNotNull.cs" />
+    <Compile Include="Rules\002-ruleFieldsNotNull.cs" />
     <Compile Include="Rules\012-ruleLOVNotInValue.cs" />
     <Compile Include="Rules\011-ruleLOVInValue.cs" />
     <Compile Include="Rules\010-ruleLOVNotEqValue.cs" />
@@ -52,7 +59,7 @@
     <Compile Include="Rules\005-ruleNumberEqValue.cs" />
     <Compile Include="Rules\004-ruleTextNotEqValue.cs" />
     <Compile Include="Rules\003-ruleTextEqValue.cs" />
-    <Compile Include="Rules\001-ruleFieldIsNull.cs" />
+    <Compile Include="Rules\001-ruleFieldsNull.cs" />
     <Compile Include="ValidationRuleService.cs" />
     <Compile Include="ValidationService.cs" />
   </ItemGroup>

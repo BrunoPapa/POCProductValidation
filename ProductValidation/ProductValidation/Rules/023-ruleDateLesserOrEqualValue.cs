@@ -3,11 +3,11 @@ using System;
 
 namespace ProductValidation.Rules
 {
-    public class ruleNumberGreaterOrEqualValue : ValidationRuleService
+    public class ruleDateLesserOrEqualValue : ValidationRuleService
     {
         protected override bool RuleValidation()
         {
-            if (Convert.ToInt32(_value) >= Convert.ToInt32(_compareValue))
+            if (Convert.ToDateTime(_value) <= Convert.ToDateTime(_compareValue))
                 return true;
             else
                 return false;

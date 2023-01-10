@@ -8,6 +8,6 @@ namespace ProductValidation.IoC.Interface.Service
 {
     public interface IBaseValidationService
     {
-        Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors);
+        Task<IEnumerable<ValidationMessageRule>> Validate(ContractEntity contract, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors);
     }
 }

@@ -7,6 +7,6 @@ namespace ProductValidation.IoC.Interface.Service
 {
     public interface IValidationService
     {
-        Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors = false);
+        Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors = false, int Language = 1);
     }
 }

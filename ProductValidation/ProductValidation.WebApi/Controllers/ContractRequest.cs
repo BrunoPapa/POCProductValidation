@@ -6,6 +6,8 @@ namespace ProductValidation.WebApi.Controllers
     {
         public int Id { get; set; }
         public int ProductId { get; set; }
+        public int Language { get; set; }
+        public bool MultipleErrors { get; set; }
         public IEnumerable<FieldsRequest> Fields { get; set; }
     }
 

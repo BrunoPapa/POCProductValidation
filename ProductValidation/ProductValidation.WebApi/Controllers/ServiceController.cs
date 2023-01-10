@@ -1,6 +1,7 @@
 ﻿using ProductValidation.IoC.Commom;
 using ProductValidation.IoC.Database;
 using ProductValidation.IoC.Interface.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,7 +20,7 @@ namespace ProductValidation.WebApi.Controllers
         }
 
         [HttpPost]
-        public async Task<IEnumerable<ValidationMessage>> Validate(ContractRequest contract)
+        public async Task<ServiceResponse> Validate(ContractRequest contract)
         {
             ContractEntity _contract = new ContractEntity() {
                 Id = contract.Id,
@@ -38,7 +39,25 @@ namespace ProductValidation.WebApi.Controllers
                 })
             );
 
-            return await _validationService.Validate(_contract, true);
+            ServiceResponse serviceResponse = new ServiceResponse()
+            {
+                MultipleErrors = contract.MultipleErrors,
+                ValidationMessage = new List<ValidationMessage>()
+            };
+
+            try
+            {
+                serviceResponse.ValidationMessage = _validationService.Validate(_contract, contract.MultipleErrors, contract.Language).Result.ToList();
+            }
+            catch (Exception ex)
+            {
+                serviceResponse.ValidationMessage.Add(new ValidationMessage()
+                {
+                    Message = ex.Message                    
+                });
+            }
+
+            return serviceResponse;
         }
     }
 }

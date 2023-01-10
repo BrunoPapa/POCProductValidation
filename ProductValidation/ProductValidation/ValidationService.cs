@@ -22,31 +22,42 @@ namespace ProductValidation
             _validationService = validationService;
         }
 
-        public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors)
+        public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors, int Language)
         {
             //var product = await _products.GetById(contract.Product.Id);
             var validations = await _validations.GetByProduct(contract.Product.Id);
 
-            //List<Task> tasks = new List<Task>();
+            List<Task> tasksMessage = new List<Task>();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
             var cts = new CancellationTokenSource();
 
             validations.ToList().ForEach(
-                p => 
-                    //tasks.Add(Task.Run(
-                    //    async () => 
-                        validationMessages.AddRange(_validationService.Validate(contract, p, cts, multipleErrors).Result.ToList())
-                    //))
+                p =>
+                    tasksMessage.Add(Task.Run(
+                        async () => 
+                        {
+                            List<ValidationMessageRule> messagerules = _validationService.Validate(contract, p, cts, multipleErrors).Result.ToList();
+                            if (messagerules.Count > 0)
+                                validationMessages.Add(new ValidationMessage()
+                                {
+                                    Message = p.ConfigValidationMessages.Where(m => m.LanguageId == Language).FirstOrDefault().Message,
+                                    MessageRules = messagerules
+                                });
+                            
+                            return Task.CompletedTask;
+                        }
+                    ))
             );
 
-            //while (tasks.Count > 0)
-            //{
-            //    var finishedTask = await Task.WhenAny(tasks);                
-            //    tasks.Remove(finishedTask);
+            while (tasksMessage.Count > 0)
+            {
+                var finishedTask = Task.WhenAny(tasksMessage);
+                if (finishedTask.IsCompleted || finishedTask.IsCanceled || finishedTask.IsFaulted)
+                    tasksMessage.Remove(finishedTask.Result);
 
-            //    if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
-            //        cts.Cancel();                
-            //}
+                if (finishedTask.Status == TaskStatus.Faulted && multipleErrors == false)
+                    cts.Cancel();                
+            }
 
             return validationMessages;
         }                

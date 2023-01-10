@@ -11,5 +11,7 @@ namespace ProductValidation.Rules
             else
                 return true;
         }
+
+        [fac]
     }
 }

@@ -3,11 +3,11 @@ using System;
 
 namespace ProductValidation.Rules
 {
-    public class ruleNumberGreaterOrEqualValue : ValidationRuleService
+    public class ruleNumberNotBetweenMaxandMin : ValidationRuleService
     {
         protected override bool RuleValidation()
         {
-            if (Convert.ToInt32(_value) >= Convert.ToInt32(_compareValue))
+            if (Convert.ToDecimal(_value) < _rule.ValueMin || Convert.ToDecimal(_value) > _rule.ValueMax)
                 return true;
             else
                 return false;

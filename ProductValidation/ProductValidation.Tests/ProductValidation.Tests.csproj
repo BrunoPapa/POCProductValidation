@@ -7,12 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac" Version="6.5.0" />
+    <PackageReference Include="EntityFramework" Version="6.4.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
     <PackageReference Include="MSTest.TestFramework" Version="3.0.2" />
+    <PackageReference Include="xunit" Version="2.4.2" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\ProductValidation.Database\ProductValidation.Database.csproj" />
     <ProjectReference Include="..\ProductValidation.IoC\ProductValidation.IoC.csproj" />
+    <ProjectReference Include="..\ProductValidation\ProductValidation.csproj" />
   </ItemGroup>
 
 </Project>
