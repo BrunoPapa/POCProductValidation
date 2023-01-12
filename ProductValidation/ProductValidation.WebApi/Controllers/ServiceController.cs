@@ -22,22 +22,27 @@ namespace ProductValidation.WebApi.Controllers
         [HttpPost]
         public async Task<ServiceResponse> Validate(ContractRequest contract)
         {
-            ContractEntity _contract = new ContractEntity() {
-                Id = contract.Id,
-                Product = new ProductEntity() { Id = contract.Id },
-                FieldsContracts = new List<FieldsContractEntity>()
-            };
+            List<Field> fields = new List<Field>();
+            try
+            {
+                if (contract == null)
+                    throw new Exception("Contract invalid.");
+                if (contract.data == null)
+                    throw new Exception("Contract invalid.");
+                if (contract.data.fields == null)
+                    throw new Exception("Contract not contain fields.");
 
-            contract.Fields.ToList().ForEach(p =>
-                _contract.FieldsContracts.Add(new FieldsContractEntity()
-                {
-                    FieldsProduct = new FieldsProductEntity()
-                    {
-                        Field = new FieldEntity() { Code = p.Code }
-                    },
-                    Value = p.Value
-                })
-            );
+                fields.AddRange(contract.data.fields);
+
+                if (contract.data.objects != null)
+                    contract.data.objects.ForEach(p => { if (p.fields != null) fields.AddRange(p.fields); });
+            }
+            catch (Exception ex)
+            {
+                return new ServiceResponse() { MultipleErrors = false, ValidationMessage = new List<ValidationMessage> { 
+                    new ValidationMessage() { Message = ex.Message }
+                } };
+            }   
 
             ServiceResponse serviceResponse = new ServiceResponse()
             {
@@ -47,7 +52,7 @@ namespace ProductValidation.WebApi.Controllers
 
             try
             {
-                serviceResponse.ValidationMessage = _validationService.Validate(_contract, contract.MultipleErrors, contract.Language).Result.ToList();
+                serviceResponse.ValidationMessage = _validationService.Validate(int.Parse(contract.data.coreProductId), fields, contract.MultipleErrors, contract.Language).Result.ToList();
             }
             catch (Exception ex)
             {

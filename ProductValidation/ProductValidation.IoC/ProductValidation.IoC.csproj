@@ -36,20 +36,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commom\ProductValidation.cs" />
     <Compile Include="Commom\ValidationMessage.cs" />
     <Compile Include="Database\BaseValidationEntity.cs" />
     <Compile Include="Database\ConfigValidationEntity.cs" />
     <Compile Include="Database\ConfigValidationMessageEntity.cs" />
     <Compile Include="Database\ConfigValidationRuleEntity.cs" />
     <Compile Include="Database\ConfigValidationRuleLOVEntity.cs" />
-    <Compile Include="Database\ContractEntity.cs" />
-    <Compile Include="Database\FieldEntity.cs" />
-    <Compile Include="Database\FieldsContractEntity.cs" />
-    <Compile Include="Database\FieldsOfferEntity.cs" />
-    <Compile Include="Database\FieldsProductEntity.cs" />
-    <Compile Include="Database\OfferEntity.cs" />
     <Compile Include="Database\OperatorEntity.cs" />
-    <Compile Include="Database\ProductEntity.cs" />
     <Compile Include="Enumerators\SeverityType.cs" />
     <Compile Include="Interface\Database\IBaseValidationRepository.cs" />
     <Compile Include="Interface\Database\IEntity.cs" />

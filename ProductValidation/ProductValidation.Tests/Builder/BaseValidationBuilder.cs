@@ -11,7 +11,6 @@ namespace ProductValidation.Tests.Builder
             _instance =  new BaseValidationEntity()
             {
                 Id = new Random().Next(99999),
-                Product = new ProductEntity(),
                 ConfigValidationMessages = new List<ConfigValidationMessageEntity>(),
                 ConfigValidationRules = new List<ConfigValidationRuleEntity>(),
                 IsExternal = false

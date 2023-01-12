@@ -1,37 +1,34 @@
-﻿using ProductValidation.IoC.Database;
+﻿using ProductValidation.IoC.Commom;
 using ProductValidation.IoC.Enumerators;
 using System;
-using System.Collections.Generic;
 
 namespace ProductValidation.Tests.Builder
 {
-    public class FieldBuilder : GenericBuilder<FieldEntity>
+    public class FieldBuilder : GenericBuilder<Field>
     {
         public FieldBuilder()
         {
-            _instance = new FieldEntity()
+            _instance = new Field()
             {
-                Id = new Random().Next(99999),
-                Created = DateTime.Now,
-                Active = true                
+                metadata = new Metadata()
             };
         }
 
-        public FieldBuilder WithCode(string code)
+        public FieldBuilder WithKey(string key)
         {
-            _instance.Code = code;
+            _instance.key = key;
             return this;
         }
 
-        public FieldBuilder WithName(string name)
+        public FieldBuilder WithValue(string value)
         {
-            _instance.Name = name;
+            _instance.value = value;
             return this;
         }
 
-        public FieldBuilder WithType(FieldType type)
+        public FieldBuilder WithMetaData(Metadata metadata)
         {
-            _instance.Type = (short)type;
+            _instance.metadata = metadata;
             return this;
         }
     }

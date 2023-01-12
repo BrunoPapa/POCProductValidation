@@ -19,9 +19,7 @@ namespace ProductValidation.IoC.Database
         public int BaseProductId { get; set; }
 
         public bool IsExternal { get; set; }
-
-        public virtual ProductEntity Product { get; set; }
-
+        
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ConfigValidationMessageEntity> ConfigValidationMessages { get; set; }
 

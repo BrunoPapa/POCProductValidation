@@ -11,7 +11,7 @@ namespace ProductValidation
 {
     public class BaseValidationService : IBaseValidationService
     {
-        public async Task<IEnumerable<ValidationMessageRule>> Validate(ContractEntity contract, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
+        public async Task<IEnumerable<ValidationMessageRule>> Validate(IEnumerable<Field> fields, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
         {
             List<Task> tasks = new List<Task>();
             List<ValidationMessageRule> validationMessageRules = new List<ValidationMessageRule>();
@@ -19,7 +19,7 @@ namespace ProductValidation
             validation.ConfigValidationRules.ToList().ForEach(
                 p =>
                     tasks.Add(Task.Run(async () => {
-                        if (!factoryRule(p.RuleTypeId).Validate(contract.FieldsContracts, p, cts))
+                        if (!factoryRule(p.RuleTypeId).Validate(fields, p, cts))
                         {
                             validationMessageRules.Add(new ValidationMessageRule()
                             {

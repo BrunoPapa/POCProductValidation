@@ -1,4 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using ProductValidation.IoC.Commom;
 using ProductValidation.IoC.Database;
 using ProductValidation.IoC.Interface.Service;
 using ProductValidation.Rules;
@@ -25,17 +26,11 @@ namespace ProductValidation.Tests.Rules
         [TestMethod]
         public void FieldIsTextIsNull()
         {
-            List<FieldsContractEntity> fields = new List<FieldsContractEntity>()
+            List<Field> fields = new List<Field>()
             {
-                new FieldsContractBuilder().WithFieldProduct(
-                    new FieldsProductBuilder()
-                    .WithField(new FieldBuilder()
-                        .WithName("Name")
-                        .WithCode("CLIENT_NAME")
-                        .WithType(IoC.Enumerators.FieldType.Text)
-                        .Instance())
-                    .Instance())
-                .WithValue(null)
+                new FieldBuilder()
+                        .WithKey("CLIENT_NAME")
+                        .WithValue(null)
                 .Instance()
             };
 
@@ -54,17 +49,11 @@ namespace ProductValidation.Tests.Rules
         [TestMethod]
         public void FieldIsTextIsNullWithValue()
         {
-            List<FieldsContractEntity> fields = new List<FieldsContractEntity>()
+            List<Field> fields = new List<Field>()
             {
-                new FieldsContractBuilder().WithFieldProduct(
-                    new FieldsProductBuilder()
-                    .WithField(new FieldBuilder()
-                        .WithName("Name")
-                        .WithCode("CLIENT_NAME")
-                        .WithType(IoC.Enumerators.FieldType.Text)
-                        .Instance())
-                    .Instance())
-                .WithValue("CLIENT NAME")
+                new FieldBuilder()
+                        .WithKey("CLIENT_NAME")
+                        .WithValue("Client name")
                 .Instance()
             };
 
@@ -83,17 +72,11 @@ namespace ProductValidation.Tests.Rules
         [TestMethod]
         public void FieldDateIsNull()
         {
-            List<FieldsContractEntity> fields = new List<FieldsContractEntity>()
+            List<Field> fields = new List<Field>()
             {
-                new FieldsContractBuilder().WithFieldProduct(
-                    new FieldsProductBuilder()
-                    .WithField(new FieldBuilder()
-                        .WithName("Name")
-                        .WithCode("CLIENT_BIRTHDAY")
-                        .WithType(IoC.Enumerators.FieldType.Date)
-                        .Instance())
-                    .Instance())
-                .WithValue(null)
+                new FieldBuilder()
+                        .WithKey("CLIENT_BIRTHDAY")
+                        .WithValue(null)
                 .Instance()
             };
 
@@ -112,17 +95,11 @@ namespace ProductValidation.Tests.Rules
         [TestMethod]
         public void FieldDateIsNullWithValue()
         {
-            List<FieldsContractEntity> fields = new List<FieldsContractEntity>()
+            List<Field> fields = new List<Field>()
             {
-                new FieldsContractBuilder().WithFieldProduct(
-                    new FieldsProductBuilder()
-                    .WithField(new FieldBuilder()
-                        .WithName("Name")
-                        .WithCode("CLIENT_BIRTHDAY")
-                        .WithType(IoC.Enumerators.FieldType.Date)
-                        .Instance())
-                    .Instance())
-                .WithValue("01/01/2023")
+                new FieldBuilder()
+                        .WithKey("CLIENT_BIRTHDAY")
+                        .WithValue("01/01/1980")
                 .Instance()
             };
 

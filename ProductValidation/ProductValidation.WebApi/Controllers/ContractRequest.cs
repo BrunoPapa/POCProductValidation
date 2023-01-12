@@ -1,19 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using ProductValidation.IoC.Commom;
+using System.Collections.Generic;
 
 namespace ProductValidation.WebApi.Controllers
 {
     public class ContractRequest
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
         public int Language { get; set; }
         public bool MultipleErrors { get; set; }
-        public IEnumerable<FieldsRequest> Fields { get; set; }
-    }
-
-    public class FieldsRequest
-    {
-        public string Code { get; set; }
-        public string Value { get; set; }
-    }
+        public Data data { get; set; }
+    }    
 }

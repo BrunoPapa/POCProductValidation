@@ -20,9 +20,9 @@ namespace ProductValidation
             _validationService = validationService;
         }
 
-        public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors, int Language)
+        public async Task<IEnumerable<ValidationMessage>> Validate(int idContract, IEnumerable<Field> fields, bool multipleErrors, int Language)
         {
-            var validations = await _validations.GetByProduct(contract.Product.Id);
+            var validations = await _validations.GetByProduct(idContract);
 
             List<Task> tasksMessage = new List<Task>();
             List<ValidationMessage> validationMessages = new List<ValidationMessage>();
@@ -33,7 +33,7 @@ namespace ProductValidation
                     tasksMessage.Add(Task.Run(
                         async () => 
                         {
-                            List<ValidationMessageRule> messagerules = _validationService.Validate(contract, p, cts, multipleErrors).Result.ToList();
+                            List<ValidationMessageRule> messagerules = _validationService.Validate(fields, p, cts, multipleErrors).Result.ToList();
                             if (messagerules.Count > 0)
                                 validationMessages.Add(new ValidationMessage()
                                 {

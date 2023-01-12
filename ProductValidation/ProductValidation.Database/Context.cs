@@ -15,14 +15,7 @@ namespace ProductValidation.Database
         public virtual DbSet<ConfigValidationMessageEntity> ConfigValidationMessages { get; set; }
         public virtual DbSet<ConfigValidationRuleEntity> ConfigValidationRules { get; set; }
         public virtual DbSet<ConfigValidationRuleLOVEntity> ConfigValidationRuleLOVs { get; set; }
-        public virtual DbSet<ContractEntity> Contracts { get; set; }
-        public virtual DbSet<FieldEntity> Fields { get; set; }
-        public virtual DbSet<FieldsContractEntity> FieldsContracts { get; set; }
-        public virtual DbSet<FieldsOfferEntity> FieldsOffers { get; set; }
-        public virtual DbSet<FieldsProductEntity> FieldsProducts { get; set; }
-        public virtual DbSet<OfferEntity> Offers { get; set; }
         public virtual DbSet<OperatorEntity> Operators { get; set; }
-        public virtual DbSet<ProductEntity> Products { get; set; }
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
@@ -67,53 +60,6 @@ namespace ProductValidation.Database
                 .WithRequired(e => e.ConfigValidationRule)
                 .WillCascadeOnDelete(false);
 
-            modelBuilder.Entity<ContractEntity>()
-                .HasMany(e => e.FieldsContracts)
-                .WithRequired(e => e.Contract)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<FieldEntity>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FieldEntity>()
-                .Property(e => e.Code)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FieldEntity>()
-                .HasMany(e => e.FieldsOffers)
-                .WithRequired(e => e.Field)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<FieldEntity>()
-                .HasMany(e => e.FieldsProducts)
-                .WithRequired(e => e.Field)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<FieldsProductEntity>()
-                .Property(e => e.DefaultValue)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<FieldsProductEntity>()
-                .HasMany(e => e.FieldsContracts)
-                .WithRequired(e => e.FieldsProduct)
-                .HasForeignKey(e => e.FieldProductId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<OfferEntity>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<OfferEntity>()
-                .HasMany(e => e.FieldsOffers)
-                .WithRequired(e => e.Offer)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<OfferEntity>()
-                .HasMany(e => e.Products)
-                .WithRequired(e => e.Offer)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<OperatorEntity>()
                 .Property(e => e.Code)
                 .IsUnicode(false);
@@ -129,26 +75,6 @@ namespace ProductValidation.Database
             modelBuilder.Entity<OperatorEntity>()
                 .HasMany(e => e.ConfigValidationRules)
                 .WithRequired(e => e.Operator)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ProductEntity>()
-                .Property(e => e.Name)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ProductEntity>()
-                .HasMany(e => e.BaseValidations)
-                .WithRequired(e => e.Product)
-                .HasForeignKey(e => e.BaseProductId)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ProductEntity>()
-                .HasMany(e => e.Contracts)
-                .WithRequired(e => e.Product)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ProductEntity>()
-                .HasMany(e => e.FieldsProducts)
-                .WithRequired(e => e.Product)
                 .WillCascadeOnDelete(false);
         }
     }
