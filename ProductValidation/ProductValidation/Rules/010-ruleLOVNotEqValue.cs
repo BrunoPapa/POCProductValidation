@@ -7,9 +7,9 @@ namespace ProductValidation.Rules
         protected override bool RuleValidation()
         {
             if (_value != _compareValue)
-                return false;
-            else
                 return true;
+            else
+                return false;
         }
     }
 }

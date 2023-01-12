@@ -11,20 +11,17 @@ namespace ProductValidation
 {
     public class ValidationService : IValidationService
     {
-        private readonly IProductRepository _products;
         private readonly IBaseValidationRepository _validations;
         private readonly IBaseValidationService _validationService;
 
-        public ValidationService(IBaseValidationRepository validations, IProductRepository products, IBaseValidationService validationService)
+        public ValidationService(IBaseValidationRepository validations, IBaseValidationService validationService)
         {
-            _products = products;
             _validations = validations;
             _validationService = validationService;
         }
 
         public async Task<IEnumerable<ValidationMessage>> Validate(ContractEntity contract, bool multipleErrors, int Language)
         {
-            //var product = await _products.GetById(contract.Product.Id);
             var validations = await _validations.GetByProduct(contract.Product.Id);
 
             List<Task> tasksMessage = new List<Task>();

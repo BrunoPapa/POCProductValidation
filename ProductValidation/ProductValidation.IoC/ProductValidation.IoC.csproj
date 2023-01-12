@@ -54,7 +54,6 @@
     <Compile Include="Interface\Database\IBaseValidationRepository.cs" />
     <Compile Include="Interface\Database\IEntity.cs" />
     <Compile Include="Interface\Database\IGenericRepository.cs" />
-    <Compile Include="Interface\Database\IProductRepository.cs" />
     <Compile Include="Interface\Service\IBaseValidationService.cs" />
     <Compile Include="Interface\Service\IValidationRuleService.cs" />
     <Compile Include="Interface\Service\IValidationService.cs" />

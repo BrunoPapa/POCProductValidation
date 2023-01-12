@@ -1,4 +1,5 @@
 ﻿using ProductValidation.IoC.Commom;
+using System;
 
 namespace ProductValidation.Rules
 {
@@ -6,10 +7,10 @@ namespace ProductValidation.Rules
     {
         protected override bool RuleValidation()
         {
-            if (_value == _compareValue)
-                return false;
-            else
+            if (Convert.ToDateTime(_value) == Convert.ToDateTime(_compareValue))
                 return true;
+            else
+                return false;
         }
     }
 }

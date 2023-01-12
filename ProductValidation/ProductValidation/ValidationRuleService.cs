@@ -45,17 +45,17 @@ namespace ProductValidation
                 }
                 else if (_rule.Operator.IsField_Date)
                 {
-                    _value = DateTime.Parse(_selectedField.Value);
+                    if (_selectedField.Value == null) _value = null; else _value = DateTime.Parse(_selectedField.Value);
                     _compareValue = _rule.ValueDate;
                 }
                 else if (_rule.Operator.IsField_Integer)
                 {
-                    _value = int.Parse(_selectedField.Value);
+                    if (_selectedField.Value == null) _value = null; else _value = int.Parse(_selectedField.Value); 
                     _compareValue = _rule.ValueMin;
                 }
                 else if (_rule.Operator.IsField_Decimal)
                 {
-                    _value = float.Parse(_selectedField.Value);
+                    if (_selectedField.Value == null) _value = null; else _value = float.Parse(_selectedField.Value);
                     _compareValue = _rule.ValueMax;
                 }
                 else if (_rule.Operator.IsFieldLOV)

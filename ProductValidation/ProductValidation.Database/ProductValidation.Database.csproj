@@ -56,7 +56,6 @@
     <Compile Include="BaseValidationRepository.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="GenericRepository.cs" />
-    <Compile Include="ProductRepository.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProductValidation.IoC\ProductValidation.IoC.csproj">

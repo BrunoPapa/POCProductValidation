@@ -7,11 +7,9 @@ namespace ProductValidation.Rules
         protected override bool RuleValidation()
         {
             if (_value == null)
-                return false;
-            else
                 return true;
-        }
-
-        [fac]
+            else
+                return false;
+        }        
     }
 }
