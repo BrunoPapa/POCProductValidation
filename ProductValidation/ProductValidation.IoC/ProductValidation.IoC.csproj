@@ -36,6 +36,7 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commom\ObjectExtension.cs" />
     <Compile Include="Commom\ProductValidation.cs" />
     <Compile Include="Commom\ValidationMessage.cs" />
     <Compile Include="Database\BaseValidationEntity.cs" />

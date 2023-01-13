@@ -7,7 +7,7 @@ namespace ProductValidation.Rules
     {
         protected override bool RuleValidation()
         {
-            if (Convert.ToDecimal(_value) >= _rule.ValueMin && Convert.ToDecimal(_value) <= _rule.ValueMax)
+            if (_value.ToInt() >= _rule.ValueMin && _value.ToInt() <= _rule.ValueMax)
                 return true;
             else
                 return false;

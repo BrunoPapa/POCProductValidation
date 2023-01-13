@@ -7,7 +7,7 @@ namespace ProductValidation.Rules
     {
         protected override bool RuleValidation()
         {
-            if (Convert.ToDateTime(_value) > Convert.ToDateTime(_compareValue))
+            if (_value.ToDateTime() > _compareValue.ToDateTime())
                 return true;
             else
                 return false;

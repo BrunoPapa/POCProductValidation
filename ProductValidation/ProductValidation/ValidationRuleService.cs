@@ -31,40 +31,47 @@ namespace ProductValidation
 
         protected virtual bool isValid()
         {
-            //verifica se existe o campo para a aplicação da regra
-            if (_fields.Where(p => p.key == _rule.Operator.Code).Count() == 0) return false;
-            else
+            try
             {
-                _selectedField = _fields.Where(p => p.key == _rule.Operator.Code).FirstOrDefault();
+                //verifica se existe o campo para a aplicação da regra
+                if (_fields.Where(p => p.key == _rule.Operator.Code).Count() == 0) return false;
+                else
+                {
+                    _selectedField = _fields.Where(p => p.key == _rule.Operator.Code).FirstOrDefault();
 
-                //get value
-                if (_rule.Operator.IsField_Text)
-                {
-                    _value = _selectedField.value;
-                    _compareValue = _rule.ValueText;
-                }
-                else if (_rule.Operator.IsField_Date)
-                {
-                    if (_selectedField.value == null) _value = null; else _value = DateTime.Parse(_selectedField.value);
-                    _compareValue = _rule.ValueDate;
-                }
-                else if (_rule.Operator.IsField_Integer)
-                {
-                    if (_selectedField.value == null) _value = null; else _value = int.Parse(_selectedField.value); 
-                    _compareValue = _rule.ValueMin;
-                }
-                else if (_rule.Operator.IsField_Decimal)
-                {
-                    if (_selectedField.value == null) _value = null; else _value = float.Parse(_selectedField.value);
-                    _compareValue = _rule.ValueMax;
-                }
-                else if (_rule.Operator.IsFieldLOV)
-                {
-                    _value = _selectedField.value;
-                    _compareValue = _rule.ValueSelect;
-                }
+                    //get value
+                    if (_rule.Operator.IsField_Text)
+                    {
+                        _value = _selectedField.value;
+                        _compareValue = _rule.ValueText;
+                    }
+                    else if (_rule.Operator.IsField_Date)
+                    {
+                        if (_selectedField.value == null) _value = null; else _value = DateTime.Parse(_selectedField.value);
+                        _compareValue = _rule.ValueDate;
+                    }
+                    else if (_rule.Operator.IsField_Integer)
+                    {
+                        if (_selectedField.value == null) _value = null; else _value = int.Parse(_selectedField.value);
+                        _compareValue = _rule.ValueMin;
+                    }
+                    else if (_rule.Operator.IsField_Decimal)
+                    {
+                        if (_selectedField.value == null) _value = null; else _value = float.Parse(_selectedField.value);
+                        _compareValue = _rule.ValueMax;
+                    }
+                    else if (_rule.Operator.IsFieldLOV)
+                    {
+                        _value = _selectedField.value;
+                        _compareValue = _rule.ValueSelect;
+                    }
 
-                return true;
+                    return true;
+                }
+            }
+            catch
+            {
+                return false;
             }
         }
         

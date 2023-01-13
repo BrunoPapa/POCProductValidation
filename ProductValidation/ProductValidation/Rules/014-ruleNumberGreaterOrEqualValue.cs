@@ -7,7 +7,7 @@ namespace ProductValidation.Rules
     {
         protected override bool RuleValidation()
         {
-            if (Convert.ToInt32(_value) >= Convert.ToInt32(_compareValue))
+            if (_value.ToInt() >= _compareValue.ToInt())
                 return true;
             else
                 return false;
