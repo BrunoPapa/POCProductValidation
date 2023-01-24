@@ -53,7 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BaseValidationRepository.cs" />
+    <Compile Include="ValidationRepository.cs" />
     <Compile Include="Context.cs" />
     <Compile Include="GenericRepository.cs" />
   </ItemGroup>
@@ -62,6 +62,9 @@
       <Project>{92e6ba9e-a487-463c-9d19-30ea3f41fbc8}</Project>
       <Name>ProductValidation.IoC</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

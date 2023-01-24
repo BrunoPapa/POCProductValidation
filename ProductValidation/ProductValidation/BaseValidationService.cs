@@ -11,12 +11,12 @@ namespace ProductValidation
 {
     public class BaseValidationService : IBaseValidationService
     {
-        public async Task<IEnumerable<ValidationMessageRule>> Validate(IEnumerable<Field> fields, BaseValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
+        public async Task<IEnumerable<ValidationMessageRule>> Validate(IEnumerable<Field> fields, ValidationEntity validation, CancellationTokenSource cts, bool multipleErrors)
         {
             List<Task> tasks = new List<Task>();
             List<ValidationMessageRule> validationMessageRules = new List<ValidationMessageRule>();
 
-            validation.ConfigValidationRules.ToList().ForEach(
+            validation.ValidationRule.ToList().ForEach(
                 p =>
                     tasks.Add(Task.Run(async () => {
                         if (!factoryRule(p.RuleTypeId).Validate(fields, p, cts))
@@ -26,7 +26,7 @@ namespace ProductValidation
                                 RuleTypeId = p.RuleTypeId,
                                 Code = p.Operator.Code,
                                 Message = p.Operator.Message,
-                                Severity = (IoC.Enumerators.SeverityType)p.Severity
+                                Severity = validation.SeverityId
                             });
 
                             if (!multipleErrors)

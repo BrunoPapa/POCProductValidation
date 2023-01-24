@@ -52,7 +52,7 @@ namespace ProductValidation.WebApi.Controllers
 
             try
             {
-                serviceResponse.ValidationMessage = _validationService.Validate(int.Parse(contract.data.coreProductId), fields, contract.MultipleErrors, contract.Language).Result.ToList();
+                serviceResponse.ValidationMessage = _validationService.Validate(int.Parse(contract.data.coreProductId), int.Parse(contract.data.configVersionId), fields, contract.MultipleErrors, contract.Language).Result.ToList();
             }
             catch (Exception ex)
             {

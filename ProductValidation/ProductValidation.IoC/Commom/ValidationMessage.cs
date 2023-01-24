@@ -15,6 +15,6 @@ namespace ProductValidation.IoC.Commom
         public int RuleTypeId { get; set; }
         public string Code { get; set; }
         public string Message { get; set; }        
-        public SeverityType Severity { get; set; }
+        public int Severity { get; set; }
     }
 }

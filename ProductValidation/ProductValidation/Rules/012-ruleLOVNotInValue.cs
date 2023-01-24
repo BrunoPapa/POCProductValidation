@@ -7,7 +7,7 @@ namespace ProductValidation.Rules
     {
         protected override bool RuleValidation()
         {
-            if (_rule.ConfigValidationRuleLOVs.Where(p => p.BaseLOVEntryId.ToString() == _selectedField.value).Count() == 0)
+            if (_rule.ValidationRuleLOV.Where(p => p.BaseLOVEntryId.ToString() == _selectedField.value).Count() == 0)
                 return true;
             else
                 return false;

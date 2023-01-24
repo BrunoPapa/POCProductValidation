@@ -29,6 +29,7 @@ namespace ProductValidation.IoC.Commom
         public string brand { get; set; }
         public string coreProductId { get; set; }
         public int coreProductVersion { get; set; }
+        public string configVersionId { get; set; }
         public string coreProductName { get; set; }
         public Extensions extensions { get; set; }
         public List<Field> fields { get; set; }

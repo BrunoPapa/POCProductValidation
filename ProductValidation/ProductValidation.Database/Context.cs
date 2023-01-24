@@ -10,55 +10,19 @@ namespace ProductValidation.Database
         {
         }
 
-        public virtual DbSet<BaseValidationEntity> BaseValidations { get; set; }
-        public virtual DbSet<ConfigValidationEntity> ConfigValidations { get; set; }
-        public virtual DbSet<ConfigValidationMessageEntity> ConfigValidationMessages { get; set; }
-        public virtual DbSet<ConfigValidationRuleEntity> ConfigValidationRules { get; set; }
-        public virtual DbSet<ConfigValidationRuleLOVEntity> ConfigValidationRuleLOVs { get; set; }
+        public virtual DbSet<BaseProductEntity> BaseProduct { get; set; }
+        public virtual DbSet<ConfigVersionEntity> ConfigVersion { get; set; }
+        public virtual DbSet<ValidationMessageEntity> ValidationMessage { get; set; }
+        public virtual DbSet<ValidationRuleEntity> ValidationRule { get; set; }
+        public virtual DbSet<ValidationRuleLOVEntity> ValidationRuleLOV { get; set; }
+        public virtual DbSet<ValidationEntity> Validation { get; set; }
         public virtual DbSet<OperatorEntity> Operators { get; set; }
-        
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<BaseValidationEntity>()
-                .HasMany(e => e.ConfigValidationMessages)
-                .WithRequired(e => e.BaseValidation)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<BaseValidationEntity>()
-                .HasMany(e => e.ConfigValidationRules)
-                .WithRequired(e => e.BaseValidation)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ConfigValidationEntity>()
-                .HasMany(e => e.ConfigValidationMessages)
-                .WithRequired(e => e.ConfigValidation)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ConfigValidationEntity>()
-                .HasMany(e => e.ConfigValidationRules)
-                .WithRequired(e => e.ConfigValidation)
-                .WillCascadeOnDelete(false);
-
-            modelBuilder.Entity<ConfigValidationMessageEntity>()
-                .Property(e => e.Message)
+            modelBuilder.Entity<ConfigVersionEntity>()
+                .Property(e => e.OfferName)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<ConfigValidationRuleEntity>()
-                .Property(e => e.RuleDescription)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ConfigValidationRuleEntity>()
-                .Property(e => e.ValueText)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ConfigValidationRuleEntity>()
-                .Property(e => e.ValueSelect)
-                .IsUnicode(false);
-
-            modelBuilder.Entity<ConfigValidationRuleEntity>()
-                .HasMany(e => e.ConfigValidationRuleLOVs)
-                .WithRequired(e => e.ConfigValidationRule)
-                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<OperatorEntity>()
                 .Property(e => e.Code)
@@ -73,8 +37,39 @@ namespace ProductValidation.Database
                 .IsUnicode(false);
 
             modelBuilder.Entity<OperatorEntity>()
-                .HasMany(e => e.ConfigValidationRules)
+                .HasMany(e => e.ValidationRule)
                 .WithRequired(e => e.Operator)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ValidationEntity>()
+                .HasMany(e => e.ValidationMessage)
+                .WithRequired(e => e.Validation)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ValidationEntity>()
+                .HasMany(e => e.ValidationRule)
+                .WithRequired(e => e.Validation)
+                .WillCascadeOnDelete(false);
+
+            modelBuilder.Entity<ValidationMessageEntity>()
+                .Property(e => e.Message)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ValidationRuleEntity>()
+                .Property(e => e.RuleDescription)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ValidationRuleEntity>()
+                .Property(e => e.ValueText)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ValidationRuleEntity>()
+                .Property(e => e.ValueSelect)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ValidationRuleEntity>()
+                .HasMany(e => e.ValidationRuleLOV)
+                .WithRequired(e => e.ValidationRule)
                 .WillCascadeOnDelete(false);
         }
     }

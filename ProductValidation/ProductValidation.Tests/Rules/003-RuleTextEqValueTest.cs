@@ -34,7 +34,7 @@ namespace ProductValidation.Tests.Rules
                 .Instance()
             };
 
-            ConfigValidationRuleEntity rule = new ConfigValidationRuleBuilder()
+            ValidationRuleEntity rule = new ValidationRuleBuilder()
                 .WithOperator(new OperatorBuilder()
                     .WithCode("CLIENT_NAME")
                     .WithIsField_Text(true)                    
@@ -57,7 +57,7 @@ namespace ProductValidation.Tests.Rules
                 .Instance()
             };
 
-            ConfigValidationRuleEntity rule = new ConfigValidationRuleBuilder()
+            ValidationRuleEntity rule = new ValidationRuleBuilder()
                 .WithOperator(new OperatorBuilder()
                     .WithCode("CLIENT_NAME")
                     .WithIsField_Text(true)

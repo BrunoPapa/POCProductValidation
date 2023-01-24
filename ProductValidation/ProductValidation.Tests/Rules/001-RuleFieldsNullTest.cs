@@ -35,7 +35,7 @@ namespace ProductValidation.Tests.Rules
                 .Instance()
             };
 
-            ConfigValidationRuleEntity rule = new ConfigValidationRuleBuilder()
+            ValidationRuleEntity rule = new ValidationRuleBuilder()
                 .WithOperator(new OperatorBuilder()
                     .WithCode("CLIENT_NAME")
                     .WithIsField_Text(true)
@@ -58,7 +58,7 @@ namespace ProductValidation.Tests.Rules
                 .Instance()
             };
 
-            ConfigValidationRuleEntity rule = new ConfigValidationRuleBuilder()
+            ValidationRuleEntity rule = new ValidationRuleBuilder()
                 .WithOperator(new OperatorBuilder()
                     .WithCode("CLIENT_NAME")
                     .WithIsField_Text(true)
@@ -81,7 +81,7 @@ namespace ProductValidation.Tests.Rules
                 .Instance()
             };
 
-            ConfigValidationRuleEntity rule = new ConfigValidationRuleBuilder()
+            ValidationRuleEntity rule = new ValidationRuleBuilder()
                 .WithOperator(new OperatorBuilder()
                     .WithCode("CLIENT_BIRTHDAY")
                     .WithIsField_Date(true)
@@ -103,8 +103,8 @@ namespace ProductValidation.Tests.Rules
                         .WithValue("01/01/1990")
                 .Instance()
             };
-            
-            ConfigValidationRuleEntity rule = new ConfigValidationRuleBuilder()
+
+            ValidationRuleEntity rule = new ValidationRuleBuilder()
                 .WithOperator(new OperatorBuilder()
                     .WithCode("CLIENT_BIRTHDAY")
                     .WithIsField_Date(true)

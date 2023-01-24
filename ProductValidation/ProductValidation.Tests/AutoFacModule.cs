@@ -12,7 +12,7 @@ namespace ProductValidation.Tests
             builder.RegisterType<BaseValidationService>().As<IBaseValidationService>();
             builder.RegisterType<ValidationService>().As<IValidationService>();
 
-            builder.RegisterType<BaseValidationRepository>().As<IBaseValidationRepository>();            
+            builder.RegisterType<ValidationRepository>().As<IValidationRepository>();            
         }
     }
 }

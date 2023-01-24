@@ -1,51 +1,72 @@
 USE ProductValidation
 GO
 
-DROP TABLE ConfigValidationRuleLOV
-DROP TABLE ConfigValidationRule
+DROP TABLE ValidationRuleLOV
+DROP TABLE ValidationRule
 DROP TABLE Operator
-DROP TABLE ConfigValidationMessage
-DROP TABLE ConfigValidation
-DROP TABLE BaseValidation
+DROP TABLE ValidationMessage
+DROP TABLE Validation
+DROP TABLE ConfigVersion
+DROP TABLE BaseProduct
 
-CREATE TABLE BaseValidation
+CREATE TABLE BaseProduct
 (
 	Id INT IDENTITY(1,1) NOT NULL,
-	BaseProductId INT NOT NULL,
-	IsExternal BIT NOT NULL DEFAULT 0,
-	CONSTRAINT [PK_BaseValidation] PRIMARY KEY CLUSTERED 
+	ProductExtRef	INT NULL,
+	ProductVersion INT NULL,
+	StartDate DATETIME NULL,
+	EndDate DATETIME NULL,
+	ProductCoreId INT NULL,
+	CONSTRAINT [PK_BaseProduct] PRIMARY KEY CLUSTERED 
 		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]	
 )
 
-INSERT INTO BASEVALIDATION VALUES (1, 0)
+INSERT INTO BaseProduct VALUES (NULL, 1, GETDATE()-30, GETDATE(), 1)
 
-CREATE TABLE ConfigValidation
+CREATE TABLE ConfigVersion
 (
 	Id INT IDENTITY(1,1) NOT NULL,
-	ConfigVersionId INT NOT NULL,
-	IsExternal BIT NOT NULL DEFAULT 0,
+	ChannelId INT NOT NULL,
+	BrandId INT NOT NULL,
+	OfferName VARCHAR(200) NULL,
+	StartDate DATETIME NULL,
+	EndDate DATETIME NULL,
+	ConfigurationVersion INT NULL,
 	CONSTRAINT [PK_ConfigValidation] PRIMARY KEY CLUSTERED 
 		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]	
 )
 
-INSERT INTO ConfigValidation VALUES (1, 0)
+INSERT INTO ConfigVersion VALUES ( 1, 1, 'OFFER', GETDATE()-30, GETDATE(), 1)
 
-CREATE TABLE ConfigValidationMessage
+CREATE TABLE [Validation]
 (
 	Id INT IDENTITY(1,1) NOT NULL,
-	ConfigValidationId INT NOT NULL,
-	BaseValidationId INT NOT NULL,
-	LanguageId INT NOT NULL,
-	Message varchar(max) NOT NULL,
-	IsExternal BIT NOT NULL DEFAULT 0,
-	CONSTRAINT [PK_ConfigValidationMessage] PRIMARY KEY CLUSTERED 
+	BaseProductId INT NULL,
+	ConfigVersionId INT NULL,
+	SeverityId INT NOT NULL,
+	CONSTRAINT [PK_Validation] PRIMARY KEY CLUSTERED 
 		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
-	CONSTRAINT [FK_ConfigValidationMessage_BaseValidation] FOREIGN KEY ([BaseValidationId]) REFERENCES [BaseValidation] ([Id]),
-	CONSTRAINT [FK_ConfigValidationMessage_ConfigValidation] FOREIGN KEY ([ConfigValidationId]) REFERENCES [ConfigValidation] ([Id])
+	CONSTRAINT [FK_Validation_BaseProduct] FOREIGN KEY (BaseProductId) REFERENCES [BaseProduct] ([Id]),
+	CONSTRAINT [FK_Validation_ConfigVersion] FOREIGN KEY (ConfigVersionId) REFERENCES [ConfigVersion] ([Id])
 )
 
-INSERT INTO ConfigValidationMessage VALUES (1, 1, 1, 'Validação do cliente com erro', 0)
-INSERT INTO ConfigValidationMessage VALUES (1, 1, 2, 'Error client validation', 0)
+INSERT INTO [Validation] VALUES (1,NULL,1)
+INSERT INTO [Validation] VALUES (NULL,1,2)
+
+CREATE TABLE ValidationMessage
+(
+	Id INT IDENTITY(1,1) NOT NULL,
+	ValidationId INT NOT NULL,
+	LanguageId INT NOT NULL,
+	[Message] varchar(max) NOT NULL,
+	IsExternal BIT NOT NULL DEFAULT 0,
+	CONSTRAINT [PK_ValidationMessage] PRIMARY KEY CLUSTERED 
+		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
+	CONSTRAINT [FK_ValidationMessage_Validation] FOREIGN KEY ([ValidationId]) REFERENCES [Validation] ([Id])
+)
+
+INSERT INTO ValidationMessage VALUES (1, 1, 'Validação do cliente com erro', 0)
+INSERT INTO ValidationMessage VALUES (1, 2, 'Error client validation', 0)
 
 CREATE TABLE Operator
 (
@@ -74,11 +95,10 @@ INSERT INTO Operator VALUES ('CLIENT_BIRTHDAY', 'BIRTHDAY', 1, 0, 0, 0, 0, 1, 0,
 INSERT INTO Operator VALUES ('CLIENT_HEIGHT', 'HEIGHT', 1, 0, 0, 1, 0, 0, 0, 0, 0, 'Altura inválida', 0)
 INSERT INTO Operator VALUES ('CLIENT_WEIGHT', 'WEIGHT', 1, 0, 0, 1, 0, 0, 0, 0, 0, 'Peso inválido', 0)
 
-CREATE TABLE ConfigValidationRule
+CREATE TABLE ValidationRule
 (
 	Id INT IDENTITY(1,1) NOT NULL,
-	ConfigValidationId INT NOT NULL,
-	BaseValidationId INT NOT NULL,
+	ValidationId INT NOT NULL,
 	RuleDescription varchar(100) NOT NULL,
 	IsFieldChoice BIT NOT NULL DEFAULT 0,
 	RuleTypeId INT NOT NULL,
@@ -91,29 +111,29 @@ CREATE TABLE ConfigValidationRule
 	ValueMax BIGINT NULL,
 	ValueSelect VARCHAR(100) NULL,
 	ValueNull BIT NOT NULL DEFAULT 0,
-	BaseLoveEntryId INT NULL,
-	Severity INT NOT NULL DEFAULT 0,
-	CONSTRAINT [PK_ConfigValidationRule] PRIMARY KEY CLUSTERED 
+	RightChoiceId INT NULL,
+	RightFieldId INT NULL,
+	BaseLoveEntryId INT NULL
+	CONSTRAINT [PK_ValidationRule] PRIMARY KEY CLUSTERED 
 		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
-	CONSTRAINT [FK_ConfigValidationRule_BaseValidation] FOREIGN KEY ([BaseValidationId]) REFERENCES [BaseValidation] ([Id]),
-	CONSTRAINT [FK_ConfigValidationRule_ConfigValidation] FOREIGN KEY ([ConfigValidationId]) REFERENCES [ConfigValidation] ([Id]),
-	CONSTRAINT [FK_ConfigValidationRule_Operator] FOREIGN KEY ([OperatorId]) REFERENCES [Operator] ([Id])
+	CONSTRAINT [FK_ValidationRule_Validation] FOREIGN KEY ([ValidationId]) REFERENCES [Validation] ([Id]),
+	CONSTRAINT [FK_ValidationRule_Operator] FOREIGN KEY ([OperatorId]) REFERENCES [Operator] ([Id])
 )
 
-INSERT INTO ConfigValidationRule VALUES (1,1,'RULE NAME NOT EMPTY',0,2,0,0,1,NULL,NULL,NULL,NULL,NULL,0,NULL,1)
-INSERT INTO ConfigValidationRule VALUES (1,1,'RULE LAST NAME NOT EMPTY',0,2,0,0,2,NULL,NULL,NULL,NULL,NULL,0,NULL,1)
-INSERT INTO ConfigValidationRule VALUES (1,1,'RULE AGE NOT EMPTY',0,2,0,0,3,NULL,NULL,NULL,NULL,NULL,0,NULL,1)
-INSERT INTO ConfigValidationRule VALUES (1,1,'RULE BIRTHDAY NOT EMPTY',0,2,0,0,4,NULL,NULL,NULL,NULL,NULL,0,NULL,1)
-INSERT INTO ConfigValidationRule VALUES (1,1,'RULE AGE >= 18',0,14,0,0,3,NULL,NULL,18,NULL,NULL,0,NULL,1)
+INSERT INTO ValidationRule VALUES (1,'RULE NAME NOT EMPTY',0,2,0,0,1,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
+INSERT INTO ValidationRule VALUES (1,'RULE LAST NAME NOT EMPTY',0,2,0,0,2,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
+INSERT INTO ValidationRule VALUES (2,'RULE AGE NOT EMPTY',0,2,0,0,3,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
+INSERT INTO ValidationRule VALUES (2,'RULE BIRTHDAY NOT EMPTY',0,2,0,0,4,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
+INSERT INTO ValidationRule VALUES (1,'RULE AGE >= 18',0,14,0,0,3,NULL,NULL,18,NULL,NULL,0,NULL,NULL,NULL)
 
-CREATE TABLE ConfigValidationRuleLOV
+CREATE TABLE ValidationRuleLOV
 (
 	Id INT IDENTITY(1,1) NOT NULL,
-	ConfigValidationRuleId INT NOT NULL,
+	ValidationRuleId INT NOT NULL,
 	BaseLOVEntryId INT NOT NULL,
-	CONSTRAINT [PK_ConfigValidationRuleLOV] PRIMARY KEY CLUSTERED 
+	CONSTRAINT [PK_ValidationRuleLOV] PRIMARY KEY CLUSTERED 
 		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY],
-	CONSTRAINT [FK_ConfigValidationRuleLOV_ConfigValidationRule] FOREIGN KEY ([ConfigValidationRuleId]) REFERENCES [ConfigValidationRule] ([Id])
+	CONSTRAINT [FK_ValidationRuleLOV_ValidationRule] FOREIGN KEY ([ValidationRuleId]) REFERENCES [ValidationRule] ([Id])
 )
 
 

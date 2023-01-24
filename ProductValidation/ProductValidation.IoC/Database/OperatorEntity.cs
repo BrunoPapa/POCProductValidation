@@ -1,9 +1,11 @@
 namespace ProductValidation.IoC.Database
 {
     using ProductValidation.IoC.Interface.Database;
+    using System;
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
     [Table("Operator")]
     public partial class OperatorEntity : IEntity
@@ -11,7 +13,7 @@ namespace ProductValidation.IoC.Database
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public OperatorEntity()
         {
-            ConfigValidationRules = new HashSet<ConfigValidationRuleEntity>();
+            ValidationRule = new HashSet<ValidationRuleEntity>();
         }
 
         public int Id { get; set; }
@@ -48,6 +50,6 @@ namespace ProductValidation.IoC.Database
         public bool IsExternal { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConfigValidationRuleEntity> ConfigValidationRules { get; set; }
+        public virtual ICollection<ValidationRuleEntity> ValidationRule { get; set; }
     }
 }

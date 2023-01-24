@@ -5,21 +5,20 @@ namespace ProductValidation.IoC.Database
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
-   
-    [Table("ConfigValidationRule")]
-    public partial class ConfigValidationRuleEntity : IEntity
+    using System.Data.Entity.Spatial;
+
+    [Table("ValidationRule")]
+    public partial class ValidationRuleEntity : IEntity
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ConfigValidationRuleEntity()
+        public ValidationRuleEntity()
         {
-            ConfigValidationRuleLOVs = new HashSet<ConfigValidationRuleLOVEntity>();
+            ValidationRuleLOV = new HashSet<ValidationRuleLOVEntity>();
         }
 
         public int Id { get; set; }
 
-        public int ConfigValidationId { get; set; }
-
-        public int BaseValidationId { get; set; }
+        public int ValidationId { get; set; }
 
         [Required]
         [StringLength(100)]
@@ -48,18 +47,16 @@ namespace ProductValidation.IoC.Database
         public string ValueSelect { get; set; }
 
         public bool ValueNull { get; set; }
+        public int RightChoiceId { get; set; }
+        public int RightFieldId { get; set; }
 
         public int? BaseLoveEntryId { get; set; }
 
-        public int Severity { get; set; }
-
-        public virtual BaseValidationEntity BaseValidation { get; set; }
-
-        public virtual ConfigValidationEntity ConfigValidation { get; set; }
-
         public virtual OperatorEntity Operator { get; set; }
 
+        public virtual ValidationEntity Validation { get; set; }
+
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ConfigValidationRuleLOVEntity> ConfigValidationRuleLOVs { get; set; }
+        public virtual ICollection<ValidationRuleLOVEntity> ValidationRuleLOV { get; set; }
     }
 }

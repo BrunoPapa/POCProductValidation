@@ -8,7 +8,7 @@ namespace ProductValidation.WebApi.Autofac
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterType<BaseValidationRepository>().As<IBaseValidationRepository>();            
+            builder.RegisterType<ValidationRepository>().As<IValidationRepository>();            
         }
     }
 }

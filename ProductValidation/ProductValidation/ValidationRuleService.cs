@@ -11,13 +11,13 @@ namespace ProductValidation
     public abstract class ValidationRuleService : IValidationRuleService
     {
         protected IEnumerable<Field> _fields;
-        protected ConfigValidationRuleEntity _rule;
+        protected ValidationRuleEntity _rule;
         protected CancellationTokenSource _cts;
         protected Field _selectedField;
         protected object _value;
         protected object _compareValue;
 
-        public bool Validate(IEnumerable<Field> fields, ConfigValidationRuleEntity validationrule, CancellationTokenSource cts)
+        public bool Validate(IEnumerable<Field> fields, ValidationRuleEntity validationrule, CancellationTokenSource cts)
         {
             _fields = fields;
             _rule = validationrule;
