@@ -82,18 +82,23 @@ CREATE TABLE Operator
 	IsRisk BIT NOT NULL DEFAULT 0,
 	IsFieldRiskLOV BIT NOT NULL DEFAULT 0,
 	IsFieldRisk BIT NOT NULL DEFAULT 0,
-	[Message] VARCHAR(max) NOT NULL,
 	IsExternal BIT NOT NULL DEFAULT 0,
 	CONSTRAINT [PK_Operator] PRIMARY KEY CLUSTERED 
 		([Id] ASC) WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]	
 )
 
-INSERT INTO Operator VALUES ('CLIENT_NAME', 'NAME', 1, 0, 0, 0, 1, 0, 0, 0, 0, 'Nome inválido', 0)
-INSERT INTO Operator VALUES ('CLIENT_LASTNAME', 'LAST NAME', 1, 0, 0, 0, 1, 0, 0, 0, 0, 'Último nome inválido', 0)
-INSERT INTO Operator VALUES ('CLIENT_AGE', 'AGE', 1, 0, 1, 0, 0, 0, 0, 0, 0, 'Idade inválida', 0)
-INSERT INTO Operator VALUES ('CLIENT_BIRTHDAY', 'BIRTHDAY', 1, 0, 0, 0, 0, 1, 0, 0, 0, 'Data de aniversário inválida', 0)
-INSERT INTO Operator VALUES ('CLIENT_HEIGHT', 'HEIGHT', 1, 0, 0, 1, 0, 0, 0, 0, 0, 'Altura inválida', 0)
-INSERT INTO Operator VALUES ('CLIENT_WEIGHT', 'WEIGHT', 1, 0, 0, 1, 0, 0, 0, 0, 0, 'Peso inválido', 0)
+INSERT INTO Operator VALUES ('Equal', '', 1, 0, 1, 0, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('NotEqual', '', 1, 0, 0, 0, 0, 1, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('Is', '', 1, 0, 0, 0, 1, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('In', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('NotIn', '', 1, 0, 0, 0, 1, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('Between', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('NotBetween', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('GreaterOrEqual', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('Greater', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('HasDecimalPart', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('LesserOrEqual', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
+INSERT INTO Operator VALUES ('Lesser', '', 1, 0, 0, 1, 0, 0, 0, 0, 0, 0)
 
 CREATE TABLE ValidationRule
 (
@@ -122,9 +127,9 @@ CREATE TABLE ValidationRule
 
 INSERT INTO ValidationRule VALUES (1,'RULE NAME NOT EMPTY',0,2,0,0,1,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
 INSERT INTO ValidationRule VALUES (1,'RULE LAST NAME NOT EMPTY',0,2,0,0,2,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
-INSERT INTO ValidationRule VALUES (2,'RULE AGE NOT EMPTY',0,2,0,0,3,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
+INSERT INTO ValidationRule VALUES (1,'RULE AGE NOT EMPTY',0,2,0,0,3,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
 INSERT INTO ValidationRule VALUES (2,'RULE BIRTHDAY NOT EMPTY',0,2,0,0,4,NULL,NULL,NULL,NULL,NULL,0,NULL,NULL,NULL)
-INSERT INTO ValidationRule VALUES (1,'RULE AGE >= 18',0,14,0,0,3,NULL,NULL,18,NULL,NULL,0,NULL,NULL,NULL)
+INSERT INTO ValidationRule VALUES (2,'RULE AGE >= 18',0,14,0,0,3,NULL,NULL,18,NULL,NULL,0,NULL,NULL,NULL)
 
 CREATE TABLE ValidationRuleLOV
 (

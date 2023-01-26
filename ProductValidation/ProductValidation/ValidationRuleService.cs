@@ -53,12 +53,12 @@ namespace ProductValidation
                     else if (_rule.Operator.IsField_Integer)
                     {
                         if (_selectedField.value == null) _value = null; else _value = int.Parse(_selectedField.value);
-                        _compareValue = _rule.ValueMin;
+                        _compareValue = int.Parse(_rule.ValueText);
                     }
                     else if (_rule.Operator.IsField_Decimal)
                     {
                         if (_selectedField.value == null) _value = null; else _value = float.Parse(_selectedField.value);
-                        _compareValue = _rule.ValueMax;
+                        _compareValue = float.Parse(_rule.ValueText);
                     }
                     else if (_rule.Operator.IsFieldLOV)
                     {
